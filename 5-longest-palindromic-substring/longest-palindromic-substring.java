@@ -1,7 +1,7 @@
 class Solution {
-    public static int Find(String s,int i,int j)
+    public static int Find(String s,int i,int j,int n)
     {
-        while(i>=0 && j<s.length() && s.charAt(i)==s.charAt(j))
+        while(i>=0 && j<n && s.charAt(i)==s.charAt(j))
         {
             i--;
             j++;
@@ -15,8 +15,8 @@ class Solution {
         int left = 0,right = 0,Max=0;
         for(int i=0;i<n;i++)
         {
-            int len1 = Find(s,i,i);
-            int len2 = Find(s,i,i+1);
+            int len1 = Find(s,i,i,n);
+            int len2 = Find(s,i,i+1,n);
 
             Max = Math.max(len1,len2);
 
