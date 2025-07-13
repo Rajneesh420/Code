@@ -8,7 +8,7 @@ class Solution:
       dummyhead = ListNode(0)
       curr = dummyhead
       carry = 0
-      while l1!= None or l2 != None or carry != 0:
+      while l1 or l2  or carry:
         l1Val = l1.val if l1 else 0
         l2Val = l2.val if l2 else 0
         columnSum = l1Val + l2Val + carry
