@@ -3,16 +3,19 @@ class Solution {
     ListNode head = null;
     public Solution(ListNode head) {
         this.head = head;
+        while (head != null) {
+            this.N ++;
+            head = head.next;
+        }
     }
     
     public int getRandom() {
+        int i = (int)(Math.random() * this.N);
         ListNode p = this.head;
-        int i = 1, ans = 0;
-        while (p != null) {
-            if (Math.random() * i < 1) ans = p.val; // replace ans with i-th node.val with probability 1/i
+        while (i > 0) { 
             p = p.next;
-            i ++;
+            i -= 1;
         }
-        return ans;
+        return p.val;
     }
 }
