@@ -5,7 +5,7 @@ class Solution {
         nums[j]=t;
     }
     public static void Permu(int[] nums,int start,List<List<Integer>> result) {
-        if(start>nums.length) return ;
+       // if(start>nums.length) return ;
         if(start==nums.length) {
             List<Integer> list = new ArrayList<>();
             for(int n:nums) list.add(n);
