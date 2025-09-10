@@ -1,19 +1,18 @@
 class NumArray {
-    int[] nums;
-
-public NumArray(int[] nums) {
-    for(int i = 1; i < nums.length; i++)
-        nums[i] += nums[i - 1];
+    int[] range;
+    public NumArray(int[] nums) {
+        range = nums;
+        int n = nums.length;
+        range[0] = nums[0];
+        for(int i=1;i<n;i++) {
+            range[i]+=range[i-1];
+        }
+    }
     
-    this.nums = nums;
-}
-
-public int sumRange(int i, int j) {
-    if(i == 0)
-        return nums[j];
-    
-    return nums[j] - nums[i - 1];
-}
+    public int sumRange(int left, int right) {
+        if(left==0) return range[right];
+        return range[right]-range[left-1];
+    }
 }
 
 /**
