@@ -1,35 +1,29 @@
 class Solution {
     public int numMatchingSubseq(String s, String[] words) {
-        
-        Map<String,Integer> map = new HashMap<>();
-        for(String str:words){
-            map.put(str,map.getOrDefault(str,0)+1);
+    Map<Character, Queue<String>> waiting = new HashMap<>();
+        for (char c = 'a'; c <= 'z'; c++) {
+            waiting.put(c, new LinkedList<>());
+        }
+        for (String word : words) {
+            char firstChar = word.charAt(0);
+            waiting.get(firstChar).offer(word);
         }
         
-        int ans = 0;
-        char ch[] = s.toCharArray();
-        
-        for(String str:map.keySet()){
-            
-            char temp[] = str.toCharArray();
-            int i = 0;
-            int j = 0;
-            
-            while(i<ch.length && j<temp.length){
-                if(ch[i]==temp[j]){
-                    i++;
-                    j++;
-                }else{
-                    i++;
+        int count = 0;
+        for (char c : s.toCharArray()) {
+            Queue<String> queue = waiting.get(c);
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                String word = queue.poll();
+                if (word.length() == 1) {
+                    count++;
+                } else {
+                    String next = word.substring(1);
+                    waiting.get(next.charAt(0)).offer(next);
                 }
             }
-            
-            if(j==temp.length){
-                ans+=map.get(str);
-            }
-            
         }
         
-      return ans;  
+        return count;
     }
 }
