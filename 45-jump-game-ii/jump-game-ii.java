@@ -9,13 +9,9 @@ class Solution {
 
         for (int i = 0; i < n - 1; i++) {
             farthest = Math.max(farthest, i + nums[i]);
-
-            // When we reach the end of the current jump's range
             if (i == currentEnd) {
                 jumps++;
                 currentEnd = farthest;
-
-                // If we've reached or surpassed the last index
                 if (currentEnd >= n - 1) {
                     break;
                 }
