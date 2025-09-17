@@ -14,15 +14,15 @@
  * }
  */
 class Solution {
-    public void Preorder(TreeNode root,List<Integer> result) {
-        if(root == null) return ;
-        result.add(root.val);
-        Preorder(root.left,result);
-        Preorder(root.right,result);
-    }
+    public void PreOrder(TreeNode root, List<Integer> result){
+    if(root == null) return ;
+    result.add(root.val);
+    PreOrder(root.left,result);
+    PreOrder(root.right,result);
+}
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
-        Preorder(root,result);
+        PreOrder(root,result);
         return result;
     }
 }
