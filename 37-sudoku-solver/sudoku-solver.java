@@ -1,32 +1,36 @@
-  class Solution {
-          public void solveSudoku(char[][] board) {
-        doSolve(board, 0, 0);
+class Solution {
+    public void solveSudoku(char[][] board) {
+        backtrack(board);
     }
-    
-    private boolean doSolve(char[][] board, int row, int col) {
-        for (int i = row; i < 9; i++, col = 0) { // note: must reset col here!
-            for (int j = col; j < 9; j++) {
-                if (board[i][j] != '.') continue;
-                for (char num = '1'; num <= '9'; num++) {
-                    if (isValid(board, i, j, num)) {
-                        board[i][j] = num;
-                        if (doSolve(board, i, j + 1))
-                            return true;
-                        board[i][j] = '.';
+
+    private boolean backtrack(char[][] board) {
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                if (board[r][c] == '.') {
+                    for (char num = '1'; num <= '9'; num++) {
+                        if (isValid(board, r, c, num)) {
+                            board[r][c] = num;
+                            if (backtrack(board)) {
+                                return true; 
+                            }
+                            board[r][c] = '.'; 
+                        }
                     }
+                    return false; 
                 }
-                return false;
             }
         }
         return true;
     }
-    
+
     private boolean isValid(char[][] board, int row, int col, char num) {
-        int blkrow = (row / 3) * 3, blkcol = (col / 3) * 3; 
-        for (int i = 0; i < 9; i++)
-            if (board[i][col] == num || board[row][i] == num || 
-                    board[blkrow + i / 3][blkcol + i % 3] == num)
-                return false;
+        for (int i = 0; i < 9; i++) {
+            if (board[row][i] == num) return false;
+            if (board[i][col] == num) return false;
+            int boxRow = 3 * (row / 3) + i / 3;
+            int boxCol = 3 * (col / 3) + i % 3;
+            if (board[boxRow][boxCol] == num) return false;
+        }
         return true;
     }
-  }
+}
