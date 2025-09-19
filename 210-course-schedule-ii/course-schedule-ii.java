@@ -1,42 +1,31 @@
 class Solution {
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
-        // Topological sort
-        // Edge case
-        if(numCourses <= 0) return new int[0];
-        
-        //1. Init Map
-        HashMap<Integer, Integer> inDegree = new HashMap<>();
-        HashMap<Integer, List<Integer>> topoMap = new HashMap<>();
-        for(int i = 0; i < numCourses; i++) {
-            inDegree.put(i, 0);
-            topoMap.put(i, new ArrayList<Integer>());
+    public int[] findOrder(int num, int[][] pre) {
+        int in[] = new int[num];
+        List<List<Integer>> g = new ArrayList<>();
+        for(int i = 0; i < num; i++) {
+            g.add(i, new ArrayList<>());
         }
-        
-        //2. Build Map
-        for(int[] pair : prerequisites) {
-            int curCourse = pair[0], preCourse = pair[1];
-            topoMap.get(preCourse).add(curCourse);  // put the child into it's parent's list
-            inDegree.put(curCourse, inDegree.get(curCourse) + 1); // increase child inDegree by 1
+        for(int[] u : pre) {
+            g.get(u[1]).add(u[0]);
+            in[u[0]]++;
         }
-        //3. find course with 0 indegree, minus one to its children's indegree, until all indegree is 0
-        int[] res = new int[numCourses];
-        int base = 0;
-        while(!inDegree.isEmpty()) {
-            boolean flag = false;   
-            for(int key : inDegree.keySet()) {  
-                if(inDegree.get(key) == 0) {
-                    res[base ++] = key;
-                    List<Integer> children = topoMap.get(key);  
-                    for(int child : children) 
-                        inDegree.put(child, inDegree.get(child) - 1);
-                    inDegree.remove(key);      
-                    flag = true;
-                    break;
+
+        Queue<Integer> que = new LinkedList<>();
+        for(int i = 0; i < num; i++) {
+            if(in[i] == 0) que.add(i);
+        }
+        int[] ans = new int[num];
+        int idx = 0;
+        while(!que.isEmpty()) {
+            int v = que.poll();
+            ans[idx++] = v;
+            for(int u : g.get(v)) {
+                in[u]--;
+                if(in[u] == 0) {
+                    que.add(u);
                 }
             }
-            if(!flag)  
-                return new int[0];
         }
-        return res;
+        return idx != num ? new int[]{} : ans;
     }
 }
