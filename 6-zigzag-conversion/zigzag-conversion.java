@@ -1,24 +1,33 @@
 class Solution {
     public String convert(String s, int numRows) {
-        if(numRows == 1 || numRows >= s.length()) return s;
-        int idx = 0,d=1;
-        List<Character>[] rows = new ArrayList[numRows];
-        for(int i=0;i<numRows;i++) rows[i] = new ArrayList<>();
+        if (numRows == 1 || s.length() <= numRows) return s;
 
-        for(char c : s.toCharArray()) {
-            rows[idx].add(c);
-            if(idx == 0)
-            d = 1;
-            else if(idx == numRows-1)
-            d = -1;
-            idx +=d;
+        // Create StringBuilders for each row
+        StringBuilder[] rows = new StringBuilder[numRows];
+        for (int i = 0; i < numRows; i++) {
+            rows[i] = new StringBuilder();
         }
 
+        int currRow = 0;
+        boolean goingDown = false;
+
+        for (char c : s.toCharArray()) {
+            rows[currRow].append(c);
+
+            // Change direction if we hit top or bottom row
+            if (currRow == 0 || currRow == numRows - 1) {
+                goingDown = !goingDown;
+            }
+
+            currRow += goingDown ? 1 : -1;
+        }
+
+        // Merge all rows
         StringBuilder result = new StringBuilder();
-        for(List<Character> row : rows){
-            for(char c: row)
-            result.append(c);
+        for (StringBuilder row : rows) {
+            result.append(row);
         }
+
         return result.toString();
     }
 }
