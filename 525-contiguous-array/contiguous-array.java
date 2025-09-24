@@ -10,7 +10,7 @@ class Solution {
             sum+=-1;
             else
             sum+=1;
-            nums[i]=sum;
+           // nums[i]=sum;
             if(map.containsKey(sum)) max = Math.max(max,i-map.get(sum));
             else
             map.put(sum,i);
