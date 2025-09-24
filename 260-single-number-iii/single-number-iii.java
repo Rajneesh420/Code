@@ -1,17 +1,15 @@
 class Solution {
     public int[] singleNumber(int[] nums) {
-        int x = 0;
-        for(int num : nums) x^=num;
+        int diff = 0;
+        for(int num : nums) diff^=num;
 
-        x = (x&(x-1))^x;
+        diff &= -diff;
 
-        int[] result = new int[2];
-        for(int num : nums){
-            if((num&x)==0)
-            result[0]^=num;
-            else
-            result[1]^=num;
+        int[] res = {0,0};
+        for(int num : nums) {
+            if((num & diff) == 0) res[0] ^= num;
+            else res[1] ^= num;
         }
-        return result;
+        return res;
     }
 }
