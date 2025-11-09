@@ -11,7 +11,7 @@ public class Solution {
         for (String s : strs) {
             char[] chars = s.toCharArray();
             Arrays.sort(chars);
-            String key = new String(chars);  // Sorted string as key
+            String key = new String(chars);  
 
             dp.computeIfAbsent(key, k -> new ArrayList<>()).add(s);
         }
